@@ -31,7 +31,7 @@ class CryptoGUI:
         # Initialize encrypted data storage
         self.encrypted_data = {}
         
-        # 设置GUI布局
+        # GUI
         self.setup_gui()
 
     def setup_gui(self):
