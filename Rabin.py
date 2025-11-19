@@ -139,8 +139,6 @@ class CryptoGUI:
                             
         Método 3: Cifrado mediante marcas de tiempo.
                 Implementación: Agregar un sufijo de marca de tiempo a cada carácter (preciso al año, mes, día, hora, minuto - 12 dígitos en total). La marca de tiempo se extrae y guarda como estándar de comparación posterior. El carácter completo (código Unicode + marca de tiempo) se cifra/descifra, y finalmente se compara la marca de tiempo en el resultado.
-
-        Autor: Ni Shuo                                    
         """)
 
 
