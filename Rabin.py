@@ -21,14 +21,14 @@ import string
 class CryptoGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Rabin Encryption and Decryption Tool")
+        self.root.title("Herramienta de Cifrado y Descifrado Rabin")
         self.root.geometry("700x650")
-        self.root.rowconfigure(0, weight=1)  # Configure the only row of the main window
-        self.root.columnconfigure(0, weight=1)  # Configure the only column of the main window
+        self.root.rowconfigure(0, weight=1)  # Configurar la única fila de la ventana principal
+        self.root.columnconfigure(0, weight=1)  # Configurar la única columna de la ventana principal
 
-        # Initialize quotient list
+        # Inicializar lista de cocientes
         self.shang = []
-        # Initialize encrypted data storage
+        # Inicializar almacenamiento de datos cifrados
         self.encrypted_data = {}
         
         # GUI
@@ -50,11 +50,11 @@ class CryptoGUI:
         mode_frame.grid(row=0, column=0, padx=10, pady=10, sticky='ew')
         mode_frame.columnconfigure(1, weight=1)  # Allow dropdown menu to expand
 
-        mode_label = tk.Label(mode_frame, text="Select Tag Method:")
+        mode_label = tk.Label(mode_frame, text="Seleccionar Método de Etiqueta:")
         mode_label.grid(row=0, column=0, padx=5,pady=5,sticky='w')
 
-        self.mode_var = tk.StringVar(value='Method 1 (Random Letters)')
-        mode_options = ['Method 1 (Random Letters)', 'Method 2 (Sequence and Checksum)','Method 3 (Timestamp)']
+        self.mode_var = tk.StringVar(value='Método 1 (Letras Aleatorias)')
+        mode_options = ['Método 1 (Letras Aleatorias)', 'Método 2 (Secuencia y Suma de Verificación)','Método 3 (Marca de Tiempo)']
         mode_dropdown = tk.OptionMenu(mode_frame, self.mode_var, *mode_options)
         mode_dropdown.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
 
@@ -65,14 +65,14 @@ class CryptoGUI:
         self.range_frame.columnconfigure(3, weight=1)
 
 
-        start_label = tk.Label(self.range_frame, text="Start Letter:")
+        start_label = tk.Label(self.range_frame, text="Letra Inicial:")
         start_label.grid(row=0, column=0, padx=5, pady=5, sticky='w')
 
         self.letter_start = tk.StringVar(value='a')
         start_dropdown = tk.OptionMenu(self.range_frame, self.letter_start, *string.ascii_lowercase)
         start_dropdown.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
 
-        end_label = tk.Label(self.range_frame, text="End Letter:")
+        end_label = tk.Label(self.range_frame, text="Letra Final:")
         end_label.grid(row=0, column=2, padx=5, pady=5, sticky='w')
 
         self.letter_end = tk.StringVar(value='f')
@@ -93,7 +93,7 @@ class CryptoGUI:
         entry_frame.grid(row=1, column=0, padx=10, pady=5, sticky='ew')
         entry_frame.columnconfigure(1, weight=1)
 
-        entry_label = tk.Label(entry_frame, text="Please enter a string:")
+        entry_label = tk.Label(entry_frame, text="Por favor ingrese una cadena:")
         entry_label.grid(row=0, column=0, padx=5, pady=5, sticky='w')
 
         self.entry = tk.Entry(entry_frame, width=80)
@@ -110,176 +110,176 @@ class CryptoGUI:
         button_frame.grid(row=3, column=0, padx=10, pady=10, sticky='ew')
         button_frame.columnconfigure((0,1,2), weight=1)  # Let three buttons share space equally
 
-        # Encrypt button
-        encrypt_button = tk.Button(button_frame, text="Encrypt", command=self.on_encrypt)
+        # Botón de cifrar
+        encrypt_button = tk.Button(button_frame, text="Cifrar", command=self.on_encrypt)
         encrypt_button.grid(row=0, column=0, padx=5, pady=5, sticky='ew')
 
-        # Decrypt button
-        decrypt_button = tk.Button(button_frame, text="Decrypt", command=self.on_decrypt)
+        # Botón de descifrar
+        decrypt_button = tk.Button(button_frame, text="Descifrar", command=self.on_decrypt)
         decrypt_button.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
 
-        # Clear button
-        clear_button = tk.Button(button_frame, text="Clear",command=self.clear)
+        # Botón de limpiar
+        clear_button = tk.Button(button_frame, text="Limpiar",command=self.clear)
         clear_button.grid(row=0, column=2, padx=5, pady=5, sticky='ew')
 
-        # Add program information button
-        info_button = tk.Button(main_frame, text="Program Info", command=self.show_info)
+        # Agregar botón de información del programa
+        info_button = tk.Button(main_frame, text="Información del Programa", command=self.show_info)
         info_button.grid(row=4, column=0, padx=10, pady=10, sticky='ew')
 
     def show_info(self):
-        # Pop up information dialog
-        messagebox.showinfo("Program Information", """
-        This is a Rabin encryption and decryption tool. You can choose different tag methods for string encryption and decryption:   
+        # Mostrar diálogo de información
+        messagebox.showinfo("Información del Programa", """
+        Esta es una herramienta de cifrado y descifrado Rabin. Puede elegir diferentes métodos de etiqueta para el cifrado y descifrado de cadenas:   
                                         
-        Method 1: Encryption by adding random letters.
-                Implementation: Randomly select one of the 26 lowercase English letters, convert it to Unicode encoding with a fixed 4-digit format. For example, "a" is converted to "0097" and appended to the Unicode encoding of each character. During decryption, extract the last four digits and convert to a character, then check if it's within the selected letter range.
+        Método 1: Cifrado mediante la adición de letras aleatorias.
+                Implementación: Seleccionar aleatoriamente una de las 26 letras minúsculas del inglés, convertirla a codificación Unicode con un formato fijo de 4 dígitos. Por ejemplo, "a" se convierte en "0097" y se agrega a la codificación Unicode de cada carácter. Durante el descifrado, extraer los últimos cuatro dígitos y convertir a un carácter, luego verificar si está dentro del rango de letras seleccionado.
                             
-        Method 2: Encryption using sequence numbers and checksums.
-                Implementation: Number each character sequentially starting from 0, with format 0000 (max input number 9999). This number and the Unicode encoding of the input character undergo hash operation. The last four digits of the hash value serve as the checksum. Only the Unicode code of the input characters is encrypted/decrypted. Finally, perform hash operation sequentially with the four results obtained from decrypting each character and compare with the last four digits of the correct hash value.
+        Método 2: Cifrado mediante números de secuencia y sumas de verificación.
+                Implementación: Numerar cada carácter secuencialmente comenzando desde 0, con formato 0000 (número máximo de entrada 9999). Este número y la codificación Unicode del carácter de entrada se someten a operación hash. Los últimos cuatro dígitos del valor hash sirven como suma de verificación. Solo el código Unicode de los caracteres de entrada se cifra/descifra. Finalmente, realizar operación hash secuencialmente con los cuatro resultados obtenidos del descifrado de cada carácter y comparar con los últimos cuatro dígitos del valor hash correcto.
                             
-        Method 3: Encryption using timestamps.
-                Implementation: Add a timestamp suffix to each character (accurate to year, month, day, hour, minute - 12 digits total). The timestamp is stripped and saved as a subsequent comparison standard. The entire character (Unicode code + timestamp) is encrypted/decrypted, and finally the timestamp in the result is compared.
+        Método 3: Cifrado mediante marcas de tiempo.
+                Implementación: Agregar un sufijo de marca de tiempo a cada carácter (preciso al año, mes, día, hora, minuto - 12 dígitos en total). La marca de tiempo se extrae y guarda como estándar de comparación posterior. El carácter completo (código Unicode + marca de tiempo) se cifra/descifra, y finalmente se compara la marca de tiempo en el resultado.
 
-        Author: Ni Shuo                                    
+        Autor: Ni Shuo                                    
         """)
 
 
     def update_range_frame_visibility(self, *args):
-        if self.mode_var.get() == 'Method 1 (Random Letters)':
+        if self.mode_var.get() == 'Método 1 (Letras Aleatorias)':
             self.range_frame.grid()
         else:
             self.range_frame.grid_remove()
 
 
     def clear(self):
-        self.entry.delete(0, tk.END)  # Clear input box
-        self.result_box.delete(1.0, tk.END)  # Clear display box
-        self.encrypted_data = {}  # Clear encrypted data
+        self.entry.delete(0, tk.END)  # Limpiar cuadro de entrada
+        self.result_box.delete(1.0, tk.END)  # Limpiar cuadro de visualización
+        self.encrypted_data = {}  # Limpiar datos cifrados
 
     def on_encrypt(self):
-        input_text = self.entry.get().strip()  # Get input box content and remove leading/trailing spaces
+        input_text = self.entry.get().strip()  # Obtener contenido del cuadro de entrada y eliminar espacios iniciales/finales
 
         if not input_text:
-            messagebox.showwarning("Input Error", "Please enter a string to encrypt.")
+            messagebox.showwarning("Error de Entrada", "Por favor ingrese una cadena para cifrar.")
             return
 
         mode = self.mode_var.get()
-        self.result_box.insert(tk.END, "=== Encryption Process ===\n\n")
+        self.result_box.insert(tk.END, "=== Proceso de Cifrado ===\n\n")
 
-        # Generate new p and q for each encryption
+        # Generar nuevas p y q para cada cifrado
         p, q = miyao()
         n = p * q
-        self.result_box.insert(tk.END, f"Generated keys p and q: {p}, {q}\n\n")
+        self.result_box.insert(tk.END, f"Claves p y q generadas: {p}, {q}\n\n")
 
-        if mode == 'Method 1 (Random Letters)':
-            # Get letter range
+        if mode == 'Método 1 (Letras Aleatorias)':
+            # Obtener rango de letras
             start = self.letter_start.get()
             end = self.letter_end.get()
 
             if start > end:
-                messagebox.showwarning("Range Error", "Start letter cannot be greater than end letter.")
+                messagebox.showwarning("Error de Rango", "La letra inicial no puede ser mayor que la letra final.")
                 return
 
             letter_range = get_reduced_alphabet(start, end)
 
-            # Add random letter tags
+            # Agregar etiquetas de letras aleatorias
             encoded_string = add_random_letter_to_string(input_text, letter_range)
-            self.result_box.insert(tk.END, f"Processed string (each character appended with a random letter): {encoded_string}\n\n")  
+            self.result_box.insert(tk.END, f"Cadena procesada (cada carácter con una letra aleatoria añadida): {encoded_string}\n\n")  
 
-            # Convert to Unicode integer list
+            # Convertir a lista de enteros Unicode
             unicode_ints = string_to_unicode_with_tuple(encoded_string)
-            self.result_box.insert(tk.END, f"Processed string Unicode values (integer): {unicode_ints}\n\n")
+            self.result_box.insert(tk.END, f"Valores Unicode de la cadena procesada (entero): {unicode_ints}\n\n")
 
-            # Perform encryption
+            # Realizar cifrado
             miwen, shang = JiaMi(unicode_ints, p, q)
-            self.result_box.insert(tk.END, f"Encrypted ciphertext Unicode values: {miwen}\n\n")
-            self.encrypted_data['Method 1'] = {'miwen': miwen, 'shang': shang, 'p': p, 'q': q}
+            self.result_box.insert(tk.END, f"Valores Unicode del texto cifrado: {miwen}\n\n")
+            self.encrypted_data['Método 1'] = {'miwen': miwen, 'shang': shang, 'p': p, 'q': q}
 
-        elif mode == 'Method 2 (Sequence and Checksum)':
-            # Add sequence number and checksum tags
+        elif mode == 'Método 2 (Secuencia y Suma de Verificación)':
+            # Agregar etiquetas de número de secuencia y suma de verificación
             encoded_string = add_sequence_and_checksum_to_string(input_text)
-            self.result_box.insert(tk.END, f"Processed string (each character prepended with sequence number and checksum): {encoded_string}\n\n")  
+            self.result_box.insert(tk.END, f"Cadena procesada (cada carácter con número de secuencia y suma de verificación): {encoded_string}\n\n")  
 
             prefixes, char_codes = split_encoding(encoded_string)
-            self.result_box.insert(tk.END, f"Sequence number and checksum part: {prefixes}\n")
-            self.result_box.insert(tk.END, f"Character Unicode value part: {char_codes}\n\n")
+            self.result_box.insert(tk.END, f"Parte de número de secuencia y suma de verificación: {prefixes}\n")
+            self.result_box.insert(tk.END, f"Parte de valor Unicode del carácter: {char_codes}\n\n")
 
-            # Perform encryption
+            # Realizar cifrado
             miwen, shang = JiaMi(char_codes, p, q)
-            self.result_box.insert(tk.END, f"Encrypted ciphertext Unicode values: {miwen}\n\n")
-            self.encrypted_data['Method 2'] = {'miwen': miwen, 'shang': shang, 'prefixes': prefixes, 'p': p, 'q': q}
+            self.result_box.insert(tk.END, f"Valores Unicode del texto cifrado: {miwen}\n\n")
+            self.encrypted_data['Método 2'] = {'miwen': miwen, 'shang': shang, 'prefixes': prefixes, 'p': p, 'q': q}
         
-        elif mode == 'Method 3 (Timestamp)':
+        elif mode == 'Método 3 (Marca de Tiempo)':
 
-            # Add timestamp to each Unicode encoding
+            # Agregar marca de tiempo a cada codificación Unicode
             unicode_with_timestamps, timestamps = add_timestamp_to_unicode(input_text)
-            self.result_box.insert(tk.END, f"Unicode encoding with timestamps (integer): {unicode_with_timestamps}\n\n")
-            self.result_box.insert(tk.END, f"Timestamp for each character: {timestamps}\n\n")
+            self.result_box.insert(tk.END, f"Codificación Unicode con marcas de tiempo (entero): {unicode_with_timestamps}\n\n")
+            self.result_box.insert(tk.END, f"Marca de tiempo para cada carácter: {timestamps}\n\n")
 
-            # Perform encryption
+            # Realizar cifrado
             miwen, shang = JiaMi(unicode_with_timestamps, p, q)
-            self.result_box.insert(tk.END, f"Encrypted ciphertext Unicode values: {miwen}\n\n")
+            self.result_box.insert(tk.END, f"Valores Unicode del texto cifrado: {miwen}\n\n")
         
-        # Store encrypted data
-            self.encrypted_data['Method 3'] = {'p': p,'q': q,'miwen': miwen,'shang': shang,'timestamps': timestamps  # Store timestamp for each character
+        # Almacenar datos cifrados
+            self.encrypted_data['Método 3'] = {'p': p,'q': q,'miwen': miwen,'shang': shang,'timestamps': timestamps  # Almacenar marca de tiempo para cada carácter
                                           }
         else:
-            messagebox.showwarning("Mode Error", "No valid tag method selected.")
+            messagebox.showwarning("Error de Modo", "No se seleccionó un método de etiqueta válido.")
             return
 
     def on_decrypt(self):
-        input_text = self.entry.get().strip()  # Get input box content and remove leading/trailing spaces
+        input_text = self.entry.get().strip()  # Obtener contenido del cuadro de entrada y eliminar espacios iniciales/finales
 
         if not input_text:
-            messagebox.showwarning("Input Error", "Please enter a string to encrypt.")
+            messagebox.showwarning("Error de Entrada", "Por favor ingrese una cadena para cifrar.")
             return
         
         mode = self.mode_var.get()
 
-        if mode == 'Method 1 (Random Letters)':
-            data = self.encrypted_data.get('Method 1')
+        if mode == 'Método 1 (Letras Aleatorias)':
+            data = self.encrypted_data.get('Método 1')
             if not data:
-                messagebox.showwarning("Decryption Error", "Encrypted data not found. Please perform encryption first.")
+                messagebox.showwarning("Error de Descifrado", "Datos cifrados no encontrados. Por favor realice el cifrado primero.")
                 return
             miwen = data['miwen']
             shang = data['shang']
             p = data['p']
             q = data['q']
         
-            # Perform decryption
+            # Realizar descifrado
             decrypted_chars = JieMi(miwen, p, q, shang)
-            # Get letter range
+            # Obtener rango de letras
             start = self.letter_start.get()
             end = self.letter_end.get()
 
             if start > end:
-                messagebox.showwarning("Range Error", "Start letter cannot be greater than end letter.")
+                messagebox.showwarning("Error de Rango", "La letra inicial no puede ser mayor que la letra final.")
                 return
 
             letter_range = get_reduced_alphabet(start, end)
 
-            # Filter valid decryption combinations
+            # Filtrar combinaciones de descifrado válidas
             valid_combinations = filter_decrypt_combinations(decrypted_chars, letter_range)
 
-            # Remove letter suffixes
+            # Eliminar sufijos de letras
             cleaned_combinations = [remove_letters_from_string(s) for s in valid_combinations]
 
-            # Output decryption results
-            self.result_box.insert(tk.END, "=== Decryption Results ===\n\n")
-            self.result_box.insert(tk.END, f"Keys p and q used: {p}, {q}\n\n")
-            self.result_box.insert(tk.END, f"All decrypted solutions: {decrypted_chars}\n\n")
+            # Mostrar resultados de descifrado
+            self.result_box.insert(tk.END, "=== Resultados de Descifrado ===\n\n")
+            self.result_box.insert(tk.END, f"Claves p y q utilizadas: {p}, {q}\n\n")
+            self.result_box.insert(tk.END, f"Todas las soluciones descifradas: {decrypted_chars}\n\n")
 
             if valid_combinations:
-                self.result_box.insert(tk.END, f"Valid solution combinations: {', '.join(valid_combinations)}\n\n")
-                self.result_box.insert(tk.END, f"Decrypted string (without letter suffix): {', '.join(cleaned_combinations)}\n\n")
+                self.result_box.insert(tk.END, f"Combinaciones de solución válidas: {', '.join(valid_combinations)}\n\n")
+                self.result_box.insert(tk.END, f"Cadena descifrada (sin sufijo de letra): {', '.join(cleaned_combinations)}\n\n")
             else:
-                self.result_box.insert(tk.END, "No valid solution combinations found.\n\n")
+                self.result_box.insert(tk.END, "No se encontraron combinaciones de solución válidas.\n\n")
 
-        elif mode == 'Method 2 (Sequence and Checksum)':
+        elif mode == 'Método 2 (Secuencia y Suma de Verificación)':
                 
-            data = self.encrypted_data.get('Method 2')
+            data = self.encrypted_data.get('Método 2')
             if not data:
-                messagebox.showwarning("Decryption Error", "Encrypted data not found. Please perform encryption first.")
+                messagebox.showwarning("Error de Descifrado", "Datos cifrados no encontrados. Por favor realice el cifrado primero.")
                 return
             miwen = data['miwen']
             shang = data['shang']
@@ -287,22 +287,22 @@ class CryptoGUI:
             p = data['p']
             q = data['q']
 
-                # Perform decryption
+                # Realizar descifrado
             decrypted_chars = JieMi(miwen, p, q, shang)
 
-            # Filter valid decryption combinations
+            # Filtrar combinaciones de descifrado válidas
             valid_combinations = combine_and_verify(prefixes, decrypted_chars)
 
-            # Output decryption results
-            self.result_box.insert(tk.END, "=== Decryption Results ===\n\n")
-            self.result_box.insert(tk.END, f"Keys p and q used: {p}, {q}\n\n")
-            self.result_box.insert(tk.END, f"All decrypted solutions: {decrypted_chars}\n\n")
-            self.result_box.insert(tk.END, f"Valid solution combinations: {valid_combinations}\n\n")
+            # Mostrar resultados de descifrado
+            self.result_box.insert(tk.END, "=== Resultados de Descifrado ===\n\n")
+            self.result_box.insert(tk.END, f"Claves p y q utilizadas: {p}, {q}\n\n")
+            self.result_box.insert(tk.END, f"Todas las soluciones descifradas: {decrypted_chars}\n\n")
+            self.result_box.insert(tk.END, f"Combinaciones de solución válidas: {valid_combinations}\n\n")
         
-        elif mode == 'Method 3 (Timestamp)':
-            data = self.encrypted_data.get('Method 3')
+        elif mode == 'Método 3 (Marca de Tiempo)':
+            data = self.encrypted_data.get('Método 3')
             if not data:
-                messagebox.showwarning("Decryption Error", "Encrypted data not found. Please perform encryption first.")
+                messagebox.showwarning("Error de Descifrado", "Datos cifrados no encontrados. Por favor realice el cifrado primero.")
                 return
             p = data['p']
             q = data['q']
@@ -310,32 +310,32 @@ class CryptoGUI:
             shang = data['shang']
             original_timestamps = data['timestamps']
         
-            # Perform decryption
+            # Realizar descifrado
             decrypted_chars = JieMi(miwen, p, q, shang)
 
-            self.result_box.insert(tk.END, "=== Decryption Process ===\n\n")
-            self.result_box.insert(tk.END, f"Keys p and q used: {p}, {q}\n\n")
-            self.result_box.insert(tk.END, f"Decrypted Unicode values with timestamps: {decrypted_chars}\n\n")
+            self.result_box.insert(tk.END, "=== Proceso de Descifrado ===\n\n")
+            self.result_box.insert(tk.END, f"Claves p y q utilizadas: {p}, {q}\n\n")
+            self.result_box.insert(tk.END, f"Valores Unicode descifrados con marcas de tiempo: {decrypted_chars}\n\n")
 
-            # Compare and extract correct characters
+            # Comparar y extraer caracteres correctos
             valid_chars_with_timestamps, valid_chars ,all_valid_combinations= verify_and_extract_characters(original_timestamps, decrypted_chars)
 
             if valid_chars_with_timestamps:
-                # Display successfully matched characters (with timestamps)
+                # Mostrar caracteres coincidentes exitosamente (con marcas de tiempo)
                 flattened_valid_chars_with_ts = [item for sublist in valid_chars_with_timestamps for item in sublist]
-                self.result_box.insert(tk.END, f"Successfully matched characters (with timestamps): {', '.join(flattened_valid_chars_with_ts)}\n\n")
+                self.result_box.insert(tk.END, f"Caracteres coincidentes exitosamente (con marcas de tiempo): {', '.join(flattened_valid_chars_with_ts)}\n\n")
         
-                # Display characters after stripping timestamps
+                # Mostrar caracteres después de eliminar marcas de tiempo
                 flattened_valid_chars = [item for sublist in valid_chars for item in sublist]
-                self.result_box.insert(tk.END, f"Characters after stripping timestamps: {', '.join(flattened_valid_chars)}\n\n")
+                self.result_box.insert(tk.END, f"Caracteres después de eliminar marcas de tiempo: {', '.join(flattened_valid_chars)}\n\n")
         
-                # Display all possible decryption combinations
-                self.result_box.insert(tk.END, f"Valid solution combinations: {', '.join(all_valid_combinations)}\n\n")
+                # Mostrar todas las combinaciones de descifrado posibles
+                self.result_box.insert(tk.END, f"Combinaciones de solución válidas: {', '.join(all_valid_combinations)}\n\n")
             else:
-                self.result_box.insert(tk.END, "No successfully matched solution combinations.\n\n")
+                self.result_box.insert(tk.END, "No se encontraron combinaciones de solución coincidentes.\n\n")
            
         else:
-            messagebox.showwarning("Mode Error", "No valid tag method selected.")
+            messagebox.showwarning("Error de Modo", "No se seleccionó un método de etiqueta válido.")
             return
 
 def main():
